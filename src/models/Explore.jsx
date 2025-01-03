@@ -13,13 +13,98 @@ import { a } from '@react-spring/three'
 
 import exploreScene from '../assets/3d/space_exploration.glb'
 
-const Explore = (props) => {
-    const exploreRef = useRef();
-  const { nodes, materials } = useGLTF(exploreScene)
+const Explore = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
+  const exploreRef = useRef();
+
+  const { gl, viewport } = useThree();
+  const { nodes, materials } = useGLTF(exploreScene);
+
+  const lastX = useRef(0);
+  const rotationSpeed = useRef(0);
+  const dampingFactor = 0.9;
+
+  const handlePointerDown = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(true);
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+
+    lastX.current = clientX;
+  }
+
+  const handlePointerUp = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsRotating(false);
+  }
+
+  const handlePointerMove = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (isRotating) {
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+
+      const delta = (clientX - lastX.current) / viewport.width;
+
+      exploreRef.current.rotation.y += delta * 0.1 * Math.PI;
+      lastX.current = clientX;
+      rotationSpeed.current = delta * 0.1 * Math.PI;
+    }
+  }
+
+  useFrame(() => {
+    if (!isRotating) {
+      rotationSpeed.current *= dampingFactor;
+
+      if (Math.abs(rotationSpeed.current) < 0.001) {
+        rotationSpeed.current = 0;
+      }
+
+      exploreRef.current.rotation.y += rotationSpeed.current;
+    }
+    else {
+      const rotation = exploreRef.current.rotation.y;
+
+      const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+      switch (true) {
+        case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
+          setCurrentStage(4);
+          break;
+        case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
+          setCurrentStage(3);
+          break;
+        case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
+          setCurrentStage(2);
+          break;
+        case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
+          setCurrentStage(1);
+          break;
+        default:
+          setCurrentStage(null);
+      }
+    }
+  });
+
+  useEffect(() => {
+    const canvas = gl.domElement;
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    canvas.addEventListener('pointerup', handlePointerUp);
+    canvas.addEventListener('pointermove', handlePointerMove);
+
+    return () => {
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      canvas.removeEventListener('pointerup', handlePointerUp);
+      canvas.removeEventListener('pointermove', handlePointerMove);
+    }
+  }, [gl, handlePointerDown, handlePointerUp, handlePointerMove]);
+
   return (
     <a.group ref={exploreRef} {...props}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <group position={[-0.003, 30.024, -2.331]} rotation={[0.238, -0.545, 0.562]} scale={7}>
+        <group position={[0, 0, 0]} rotation={[0.238, -0.545, 0.562]} scale={8}>
           <mesh geometry={nodes.planet001_1.geometry} material={materials.scene} />
           <mesh geometry={nodes.planet001_2.geometry} material={materials.scene} />
         </group>

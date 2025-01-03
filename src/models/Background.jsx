@@ -7,15 +7,23 @@ Title: Star Wars - Low Poly Tatooine Skybox
 */
 
 import { useGLTF } from '@react-three/drei'
-import React from 'react'
+import { useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
 
 import backgroundScene from '../assets/3d/star_wars_-_low_poly_tatooine_skybox.glb'
 
-const Background = () => {
-    const background = useGLTF(backgroundScene)
+const Background = ({ isRotating }) => {
+    const background = useGLTF(backgroundScene);
+    const backgroundRef = useRef();
+
+    useFrame((_, delta) => {
+      if (isRotating) {
+        backgroundRef.current.rotation.y += 0.25 * delta;
+      }
+    });
 
   return (
-    <mesh>
+    <mesh ref={backgroundRef}>
         <primitive object={background.scene}/>
     </mesh>
   )
