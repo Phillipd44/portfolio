@@ -12,21 +12,21 @@ import { useFrame } from '@react-three/fiber'
 
 import backgroundScene from '../assets/3d/star_wars_-_low_poly_tatooine_skybox.glb'
 
-const Background = ({ isRotating }) => {
+const Background = ({ currentRotation }) => {
     const background = useGLTF(backgroundScene);
     const backgroundRef = useRef();
 
-    useFrame((_, delta) => {
-      if (isRotating) {
-        backgroundRef.current.rotation.y += 0.25 * delta;
+    useFrame(() => {
+      if (backgroundRef.current) {
+        backgroundRef.current.rotation.y = currentRotation;
       }
     });
 
-  return (
-    <mesh ref={backgroundRef}>
-        <primitive object={background.scene}/>
-    </mesh>
-  )
+    return (
+      <mesh ref={backgroundRef}>
+          <primitive object={background.scene}/>
+      </mesh>
+    )
 }
 
 export default Background

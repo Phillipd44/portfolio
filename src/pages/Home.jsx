@@ -8,6 +8,7 @@ import Background from '../models/Background'
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
+  const [currentRotation, setCurrentRotation] = useState(0);
 
   return (
     <section className='w-full h-screen relative'>
@@ -18,11 +19,12 @@ const Home = () => {
             <ambientLight intensity={0.5}/>
             <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1}/>
 
-            <Background isRotating={isRotating}/>
+            <Background currentRotation={currentRotation}/>
             <Explore
-            isRotating={isRotating}
-            setIsRotating={setIsRotating}
-            setCurrentStage={setCurrentStage}
+              isRotating={isRotating}
+              setIsRotating={setIsRotating}
+              setCurrentStage={setCurrentStage}
+              setCurrentRotation={setCurrentRotation}
             />
           </Suspense>
       </Canvas>

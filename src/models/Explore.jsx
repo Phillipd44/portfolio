@@ -13,7 +13,7 @@ import { a } from '@react-spring/three'
 
 import exploreScene from '../assets/3d/space_exploration.glb'
 
-const Explore = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
+const Explore = ({ isRotating, setIsRotating, setCurrentStage, setCurrentRotation, ...props }) => {
   const exploreRef = useRef();
 
   const { gl, viewport } = useThree();
@@ -48,9 +48,10 @@ const Explore = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
 
       const delta = (clientX - lastX.current) / viewport.width;
 
-      exploreRef.current.rotation.y += delta * 0.1 * Math.PI;
+      exploreRef.current.rotation.y += delta * 0.04 * Math.PI;
+      setCurrentRotation(exploreRef.current.rotation.y);
       lastX.current = clientX;
-      rotationSpeed.current = delta * 0.1 * Math.PI;
+      rotationSpeed.current = delta * 0.04 * Math.PI;
     }
   }
 
@@ -63,6 +64,7 @@ const Explore = ({ isRotating, setIsRotating, setCurrentStage, ...props }) => {
       }
 
       exploreRef.current.rotation.y += rotationSpeed.current;
+      setCurrentRotation(exploreRef.current.rotation.y);
     }
     else {
       const rotation = exploreRef.current.rotation.y;
