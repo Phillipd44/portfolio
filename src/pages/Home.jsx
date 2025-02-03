@@ -8,7 +8,7 @@ import HomeInfo from '../components/HomeInfo'
 
 const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
-  const [currentStage, setCurrentStage] = useState(1);
+  const [currentStage, setCurrentStage] = useState(null);
   const [currentRotation, setCurrentRotation] = useState(0);
 
   return (
