@@ -28,10 +28,14 @@ const renderContent = {
         />
     ),
     3: (
-        <h1>3</h1>
+        <br />
     ),
     4: (
-        <h1>4</h1>
+        <InfoBox
+            text="Looking for a skilled software engineer? Contact me to collaborate and build something amazing!"
+            link="/contact"
+            btnText="Let's talk"
+        />
     )
 }
 

@@ -72,17 +72,17 @@ const Explore = ({ isRotating, setIsRotating, setCurrentStage, setCurrentRotatio
       const normalizedRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
 
       switch (true) {
-        case normalizedRotation >= 5.45 && normalizedRotation <= 5.85:
-          setCurrentStage(4);
+        case normalizedRotation >= 5.45 && normalizedRotation <= 5.95:
+          setCurrentStage(1);
           break;
-        case normalizedRotation >= 0.85 && normalizedRotation <= 1.3:
+        case normalizedRotation >= 0.8 && normalizedRotation <= 1.3:
           setCurrentStage(3);
           break;
-        case normalizedRotation >= 2.4 && normalizedRotation <= 2.6:
-          setCurrentStage(2);
+        case normalizedRotation >= 2.1 && normalizedRotation <= 2.6:
+          setCurrentStage(4);
           break;
-        case normalizedRotation >= 4.25 && normalizedRotation <= 4.75:
-          setCurrentStage(1);
+        case normalizedRotation >= 3.9 && normalizedRotation <= 4.4:
+          setCurrentStage(2);
           break;
         default:
           setCurrentStage(null);
