@@ -1,11 +1,13 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 import { Home, About, Contact } from './pages';
 
 const App = () => {
   return (
-    <main>
+    <div>
+      <main>
         <Router>
             <Navbar />
             <Routes>
@@ -14,7 +16,9 @@ const App = () => {
                 <Route path="/contact" element={<Contact />} />
             </Routes>
         </Router>
-    </main>
+      </main>
+      <Footer/>
+    </div>
   )
 }
 
