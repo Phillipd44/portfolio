@@ -19,6 +19,7 @@ import golfImage from '../assets/images/minimeGolf.jpg'
 import moviesImage from '../assets/images/movies.jpg'
 import me from '../assets/images/me.jpg'
 import workoutImage from '../assets/images/workout.jpg'
+import resume from '../assets/PhillipDesRochersResume2025.pdf'
 
 const About = () => {
   return (
@@ -38,6 +39,17 @@ const About = () => {
               alt="Myself" 
               className="w-96 h-96 object-cover shadow-lg border-4 border-orange-800 rounded-lg"
             />
+          </div>
+          <div className="flex justify-center mt-8">
+            <p className='text-5xl text-gray-600'>Here is my&nbsp;</p>
+            <a 
+              href={resume} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-5xl font-bold text-blue-600 hover:text-blue-800 transition-colors duration-300"
+            >
+              Resume
+            </a>
           </div>
         </section>
 
