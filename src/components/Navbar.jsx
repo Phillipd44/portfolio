@@ -11,6 +11,9 @@ const Navbar = () => {
             <NavLink to="/about" className={({ isActive }) => isActive ? 'text-orange-700' : 'text-black'}>
                 About
             </NavLink>
+            <NavLink to="/projects" className={({ isActive }) => isActive ? 'text-orange-700' : 'text-black'}>
+                Projects
+            </NavLink>
             <NavLink to="/contact" className={({ isActive }) => isActive ? 'text-orange-700' : 'text-black'}>
                 Contact
             </NavLink>

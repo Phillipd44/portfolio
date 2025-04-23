@@ -1,7 +1,6 @@
 import { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import Loader from '../components/Loader'
-import PurplePlanet from '../models/PurplePlanet'
 import Explore from '../models/Explore'
 import Background from '../models/Background'
 import HomeInfo from '../components/HomeInfo'
