@@ -24,6 +24,7 @@ import vercelIcon from '../assets/icons/vercel.svg'
 import viteIcon from '../assets/icons/vite.svg'
 import renderIcon from '../assets/icons/render.svg'
 import nodeIcon from '../assets/icons/node.svg'
+import threeIcon from '../assets/icons/three.svg'
 
 const projects = [
   {
@@ -63,7 +64,7 @@ const projects = [
     title: "Interactive Portfolio Website",
     description:
       "You're looking at it! This interactive 3D portfolio was designed and developed to showcase my work, skills, and personality in a unique and immersive way. Built with React and Vite, the site features a custom Three.js-powered 3D planet that visitors can explore, making the experience both visual and engaging. The frontend is deployed on Vercel for speed and scalability, while the backend is hosted on Render to handle contact form submissions and future API integrations.",
-    image: portfolioWebsite, // Replace with a screenshot or 3D render
+    image: portfolioWebsite,
     techStack: [
       "React",
       "Vite",
@@ -74,7 +75,10 @@ const projects = [
       "Render"
     ],
     liveUrl: null,
-    githubUrl: null
+    githubUrl: [
+      "https://github.com/Phillipd44/portfolio",
+      "https://github.com/Phillipd44/portfolioBackend"
+    ]
   }
 ]
 
@@ -129,6 +133,7 @@ const Projects = () => {
                           {tech === "Vite" && <img src={viteIcon} alt="Vite" className="w-6 h-6" />}
                           {tech === "Render" && <img src={renderIcon} alt="Render" className="w-6 h-6" />}
                           {tech === "Node.js" && <img src={nodeIcon} alt="Node.js" className="w-6 h-6" />}
+                          {tech === "Three.js" && <img src={threeIcon} alt="Three.js" className="w-6 h-6" />}
                           {tech}
                         </Badge>
                       ))}
@@ -146,12 +151,25 @@ const Projects = () => {
                       </Button>
                     )}
                     {project.githubUrl && (
-                      <Button asChild variant="outline" size="sm">
-                        <Link to={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="h-4 w-4 mr-2" />
-                          Source Code
-                        </Link>
-                      </Button>
+                      <div className="flex gap-2">
+                        {Array.isArray(project.githubUrl) ? (
+                          project.githubUrl.map((url, index) => (
+                            <Button key={index} asChild variant="outline" size="sm">
+                              <Link to={url} target="_blank" rel="noopener noreferrer">
+                                <Github className="h-4 w-4 mr-2" />
+                                {index === 0 ? 'Frontend Code' : 'Backend Code'}
+                              </Link>
+                            </Button>
+                          ))
+                        ) : (
+                          <Button asChild variant="outline" size="sm">
+                            <Link to={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                              <Github className="h-4 w-4 mr-2" />
+                              Source Code
+                            </Link>
+                          </Button>
+                        )}
+                      </div>
                     )}
                   </div>
                 </CardFooter>
