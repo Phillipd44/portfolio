@@ -4,7 +4,7 @@
 // Photo by <a href="https://unsplash.com/@tombriskey?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Tom Briskey</a> on <a href="https://unsplash.com/photos/basketball-hoop-with-basketball-hoop-AddAnDkkovM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 // Photo by <a href="https://unsplash.com/@risennnnn?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Risen Wang</a> on <a href="https://unsplash.com/photos/gym-equipment-inside-room-20jX9b35r_M?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "../components/card"
 import softwareDeveloperIcon from '../assets/icons/softwareDeveloper.svg'
 import dataIcon from '../assets/icons/data.svg'
@@ -22,6 +22,58 @@ import workoutImage from '../assets/images/workout.jpg'
 import resume from '../assets/PhillipDesRochersResume2025.pdf'
 
 const About = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState(0);
+  const totalImages = 8; // Total number of images to load
+
+  useEffect(() => {
+    const images = [
+      me,
+      michiganStateImage,
+      guitarImage,
+      basketballImage,
+      volleyballImage,
+      golfImage,
+      moviesImage,
+      workoutImage
+    ];
+
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          setLoadedImages(prev => prev + 1);
+          resolve();
+        };
+        img.onerror = reject;
+      });
+    };
+
+    const loadAllImages = async () => {
+      try {
+        await Promise.all(images.map(loadImage));
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error loading images:', error);
+        setIsLoading(false); // Still show content even if some images fail to load
+      }
+    };
+
+    loadAllImages();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-orange-200">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-orange-800 text-lg">Loading images... {Math.round((loadedImages / totalImages) * 100)}%</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <section className="relative w-full min-h-screen bg-orange-200">
       <div className="max-container px-4 py-8 mx-auto max-w-4xl">
